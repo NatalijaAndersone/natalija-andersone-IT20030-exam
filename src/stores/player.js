@@ -31,18 +31,16 @@ export const player = reactive({
         return this.now_playing?.preview_url;
     },
     getNextSong(){
-        var index = this.playlist.findIndex(song => {
-            return song.id === getNowPlayingSongId();
-        });
+        var index = this.playlist.map(song => song.id).indexOf(getNowPlayingSongId());
+
         if (this.playlist[index+1] == -1){
             return false;
         }
         return this.playlist[index+1];
     },
     getPreviousSong() {
-        var index = this.playlist.findIndex(song => {
-            return song.id === getNowPlayingSongId();
-        });
+        var index = this.playlist.map(song => song.id).indexOf(getNowPlayingSongId());
+        
         if (this.playlist[index-1] == -1){
             return false;
         }
