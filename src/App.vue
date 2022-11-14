@@ -1,23 +1,29 @@
 <template>
-    <Header></Header>
-    <div id="section-body">
-        <nav id="nav-main" class="wrapper-navigation">
-            <ol>
-                <li>
-                    <a href="/">SONGS</a>
-                </li>
-                <li>
-                    <a href="/albums">ALBUMS</a>
-                </li>
-                <li>
-                    <a href="/about">ABOUT</a>
-                </li>
-            </ol>
-        </nav>
-        <router-view class="section-router"></router-view>
+    <div v-if="is_a">
+        <Header></Header>
     </div>
-    <div id="section-player">
-        <AudioPlayer />
+    <div id="section-body">
+            <div v-if="is_a">
+            <Navigation></Navigation>
+            </div>
+        <router-view class="section-router"></router-view>
+        
+        <div v-if="is_a">
+            <div id="section-player">
+                <AudioPlayer />
+            </div>
+        </div>
     </div>
 </template>
 
+<script>
+import { auth } from '../src/stores/auth'
+
+export default {
+    data() {
+        return {
+           is_a: auth.is_authenticated
+        }
+    }
+}
+</script>
