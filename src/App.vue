@@ -1,5 +1,4 @@
 <template>
-    
     <div v-if="is_a"><Header></Header></div>
     <div id="section-body">
             <div v-if="is_a == true">

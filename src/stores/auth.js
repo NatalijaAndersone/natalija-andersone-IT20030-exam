@@ -29,7 +29,7 @@ authenticate(email, password) {
 
 logout() {
     localStorage.clear();
-    this.is_authenticated === false;
+    this.is_authenticated = false;
     router.push('/login');
 },
 

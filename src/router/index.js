@@ -22,11 +22,11 @@ const routes = [
         component: Songs,
     },
     {
-        path:'albums',
+        path:'/albums',
         component: Albums,
     },
     {
-        path: 'about',
+        path:'/about',
         component:About,
     }
 ]
