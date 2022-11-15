@@ -1,5 +1,7 @@
 // TE DEFINĒT USER OBJEKTU
+import router from '../router';
 import { reactive } from 'vue'
+
 export const auth = reactive({
 is_authenticated: localStorage.is_authenticated ?? false,
 
@@ -19,9 +21,9 @@ setUserData(name, surname, code) {
 
 authenticate(email, password) {
     if(email == "natalija.andersone@va.lv" && password == "123456"){
-        localStorage.is_authenticated === true;
-        this.is_authenticated === true;
-        router.push('/janodzeshteksts');
+        localStorage.is_authenticated = true;
+        this.is_authenticated = true;
+        router.push('/');
     }
 },
 

@@ -1,11 +1,11 @@
 <template>
-    <div v-if="is_a">
-        <Header></Header>
-    </div>
+    
+    <div v-if="is_a"><Header></Header></div>
     <div id="section-body">
-            <div v-if="is_a">
+            <div v-if="is_a == true">
             <Navigation></Navigation>
             </div>
+
         <router-view class="section-router"></router-view>
         
         <div v-if="is_a">
