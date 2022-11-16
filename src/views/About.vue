@@ -4,7 +4,7 @@
             <h1>ABOUT ME</h1>
             <div class="settings">
                 <button id="btn-edit"  v-bind:class="[{ active : editing }]" @click="changeEdit">{{editVar}}</button>
-                <button id="btn-save" v-if="editing" @click="changeUserData, changeEdit">Save Form</button>
+                <button id="btn-save" v-if="editing" @click="changeEdit, changeUserData">Save Form</button>
             </div>
         </div>
         <form>
