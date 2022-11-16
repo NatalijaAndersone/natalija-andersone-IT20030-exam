@@ -1,13 +1,13 @@
 <template>
-    <div v-if="is_a"><Header></Header></div>
+    <div v-if="auth.is_authenticated"><Header></Header></div>
     <div id="section-body">
-            <div v-if="is_a == true">
-            <Navigation></Navigation>
+            <div v-if="auth.is_authenticated">
+                <Navigation></Navigation>
             </div>
 
         <router-view class="section-router"></router-view>
         
-        <div v-if="is_a">
+        <div v-if="auth.is_authenticated">
             <div id="section-player">
                 <AudioPlayer />
             </div>
@@ -21,7 +21,7 @@ import { auth } from '../src/stores/auth'
 export default {
     data() {
         return {
-           is_a: auth.is_authenticated
+           auth
         }
     }
 }

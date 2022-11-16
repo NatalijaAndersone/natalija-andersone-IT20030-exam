@@ -25,16 +25,16 @@
                     </th>
                 </tr>
                 <!-- Loop goes on this <tr> element -->
-                <tr class="song">
+                <tr class="song" v-for="(songs, index) in songs">
                     <td id="td-index">
                         <IconPlay />
-                        <span id="txt-index">1</span>
+                        <span id="txt-index">{{index}}</span>
                     </td>
                     <td id="td-title">
-                        <img src="https://i.scdn.co/image/ab67616d00001e02980c9d288a180838cd12ad24" />
-                        DEEP (feat. Nonô)
+                        <img :src='songs.album.images[0].url' />
+                        {{songs.name}}
                     </td>
-                    <td id="td-artist">Example, Bou, Nonô</td>
+                    <td id="td-artist">{{getArtists(songs)}}</td>
                     <td id="td-album">We May Grow Old But We Never Grow Up</td>
                     <td id="td-duration">
                         3:07
@@ -46,11 +46,22 @@
     </div>
 </template>
 <script>
+import songs from '../data/songs';
     export default {
+        data(){
+            return{
+                songs: songs
+            }
+        },
         methods: {
             handleScroll(event) {
                 this.$refs.header.classList.value = event.target.scrollTop > 100 ? 'scrolled' : '';
             },
+            getArtists(songs){
+                return songs.artists[1] === undefined ? songs.artists[0].name 
+                : songs.artists[2] === undefined ? songs.artists[0].name + " , "+ songs.artists[1].name
+                : songs.artists[0].name + " , "+ songs.artists[1].name + " , " +songs.artists[2].name;
+            }
         }
     }
 </script>

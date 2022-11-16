@@ -19,8 +19,8 @@ import { auth } from '/src/stores/auth'
 export default {
     data() {
       return {
-        name: auth.name,
-        surname: auth.surname
+        name: auth.user.name,
+        surname: auth.user.surname
       }
     },
     methods: {
