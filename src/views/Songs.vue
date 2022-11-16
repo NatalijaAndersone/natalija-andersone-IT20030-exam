@@ -46,7 +46,7 @@
     </div>
 </template>
 <script>
-import songs from '../data/songs';
+    import songs from '../data/songs';
     export default {
         data(){
             return{

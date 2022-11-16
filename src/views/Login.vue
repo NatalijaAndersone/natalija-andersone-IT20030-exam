@@ -16,7 +16,7 @@
 import { auth } from '/src/stores/auth'
 
 export default {
-    data() {
+    data() { 
       return {
         email: '',
         password: ''
