@@ -6,20 +6,21 @@
                 <input id="input-search" placeholder="Search by title..." />
             </div>
             <div class="wrapper-settings">
-                <button id="btn-show-favorites">Show Favorites</button>
+                <button id="btn-show-favorites" :class="{ active: active }" @click="active = !active">Show Favorites</button>
             </div>
         </div>
+
         <div class="wrapper-songs">
             <table cellspacing="0" cellpadding="0">
                 <tr ref="header">
                     <th id="th-id" >#</th>
-                    <th id="th-title">
+                    <th id="th-title" v-bind:class ="{active: sortByName}" @click = 'click += 1, sortNames()'>
                         Title
                         <IconCaretUp />
                     </th>
                     <th id="th-artist">Artist</th>
                     <th id="th-album">Album</th>
-                    <th id="th-duration">
+                    <th id="th-duration" v-bind:class="{active:sortByDuration}" @click = 'click += 1, sortDuration()'>
                         Duration
                         <IconCaretUp />
                     </th>
@@ -35,9 +36,9 @@
                         {{songs.name}}
                     </td>
                     <td id="td-artist">{{getArtists(songs)}}</td>
-                    <td id="td-album">We May Grow Old But We Never Grow Up</td>
+                    <td id="td-album">{{songs.album.name}}</td>
                     <td id="td-duration">
-                        3:07
+                        {{convertMStoS(songs.duration_ms)}}
                         <IconHeart />
                     </td>
                 </tr>
@@ -45,14 +46,31 @@
         </div>
     </div>
 </template>
+
 <script>
     import songs from '../data/songs';
+    import IconCaretUp from '../components/icons/IconCaretUp.vue'
+    import IconHeart from '../components/icons/IconHeart.vue'
+    import IconPlay from '../components/icons/IconPlay.vue'
     export default {
         data(){
             return{
-                songs: songs
+                songs: songs,
+                active: false,
+                click: 0,
+                sortByName : false,
+                sortByDuration : false,
+                unsortedNames : [],
+                unsortedDuration : []
             }
         },
+
+        components:{
+            IconCaretUp,
+            IconHeart,
+            IconPlay
+        },
+
         methods: {
             handleScroll(event) {
                 this.$refs.header.classList.value = event.target.scrollTop > 100 ? 'scrolled' : '';
@@ -61,7 +79,55 @@
                 return songs.artists[1] === undefined ? songs.artists[0].name 
                 : songs.artists[2] === undefined ? songs.artists[0].name + " , "+ songs.artists[1].name
                 : songs.artists[0].name + " , "+ songs.artists[1].name + " , " +songs.artists[2].name;
+            },
+            
+            sortNames(){
+                if(!this.sortByName){
+                    this.unsortedNames = songs.concat();
+                    this.sortByName = true;
+                };
+                if(this.click == 1){
+                    return this.songs.sort((a, b) => {
+                    return a.name.localeCompare(b.name);
+                    });
+                }else if(this.click == 2){
+                    return this.songs.sort((b, a) => {
+                    return a.name.localeCompare(b.name);
+                    });
+                }else if(this.click == 3){
+                    this.sortByName = false;
+                    this.click = 0;
+                    this.songs = this.unsortedNames.concat();
+                }},
+
+            sortDuration(){
+                if(!this.sortByDuration){
+                    this.unsortedDuration = songs.concat();
+                    this.sortByDuration = true;
+                };
+                if(this.click == 1){
+                    return this.songs.sort((a, b) => {
+                    return a.duration_ms.toString().localeCompare(b.duration_ms.toString());
+                    });
+                }else if(this.click == 2){
+                    return this.songs.sort((b, a) => {
+                    return a.duration_ms.toString().localeCompare(b.duration_ms.toString());
+                    });
+                }else if(this.click == 3){
+                    this.sortByDuration = false;
+                    this.click = 0;
+                    this.songs = this.unsortedDuration.concat();
+                }},
+
+            convertMStoS(millis) {
+                var minutes = Math.floor(millis / 60000);
+                var seconds = ((millis % 60000) / 1000).toFixed(0);
+                return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
             }
+        
+
+
+            
         }
     }
 </script>
